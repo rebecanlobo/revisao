@@ -1,0 +1,79 @@
+CREATE TABLE tbfunc (
+id_func int,
+nm_func varchar (70),
+cargo_func varchar (100),
+salario decimal,
+id_depart int
+);
+
+ALTER TABLE tbfunc ADD PRIMARY KEY (id_func)
+
+CREATE TABLE tbdepart (
+id_depart int,
+nm_depart varchar (50),
+loc_depart varchar (90),
+cd_depart varchar (50)
+	);
+	
+ALTER TABLE tbdepart ADD PRIMARY KEY (id_depart)
+
+ALTER TABLE tbfunc ADD CONSTRAINT id_depart FOREIGN KEY (id_depart) REFERENCES tbdepart (id_depart);
+
+-- 1. INSERIR 10 NOVOS FUNCIONÁRIOS NO BANCO DE DADOS E 5 DEPARTAMENTOS
+
+INSERT INTO tbfunc values (
+12, 'funcionarioA', 'gerente', 1000);
+
+INSERT INTO tbfunc values 
+(13, 'funcionarioB', 'analista', 2000),
+(14, 'funcionarioC', 'supervisor', 3000),
+(15, 'funcionarioD', 'analista', 2000),
+(16, 'funcionarioE', 'estagiario', 600),
+(17, 'funcionarioF', 'assistente', 1500),
+(18, 'funcionarioG', 'estagiario', 600),
+(19, 'funcionarioH', 'assistente', 1500),
+(20, 'funcionarioI', 'supervisor', 3000),
+(21, 'funcionarioJ', 'gerente', 4000),
+(22, 'funcionarioK', 'diretor', 8000);
+
+UPDATE tbfunc set id_depart = 01 where id_func = 13
+UPDATE tbfunc set id_depart = 02 where id_func = 17
+UPDATE tbfunc set id_depart = 02 where id_func = 22
+UPDATE tbfunc set id_depart = 02 where id_func = 20
+UPDATE tbfunc set id_depart = 04 where id_func = 15
+UPDATE tbfunc set id_depart = 05 where id_func = 14
+
+INSERT INTO tbdepart values 
+(01, 'marketing', 'CE', 001),
+(02, 'produção', 'ES', 002),
+(03, 'direção', 'SP', 003),
+(04, 'financeiro', 'CE', 004),
+(05, 'engenharia', 'MG', 005);
+
+UPDATE tbdepart set id_depart = 1 where id_depart = 01
+UPDATE tbdepart set id_depart = 2 where id_depart = 02
+UPDATE tbdepart set id_depart = 3 where id_depart = 03
+UPDATE tbdepart set id_depart = 4 where id_depart = 04
+UPDATE tbdepart set id_depart = 5 where id_depart = 05
+
+
+-- 2. ATUALIZAR O SALÁRIO DE UM FUNCIONÁRIO
+
+UPDATE tbfunc set salario = 4000 where id_func = 12; 
+
+select * from tbfunc
+
+-- 3. RECUPERAR TODOS OS FUNCIONÁRIOS DE UM DETERMINADO DEPARTAMENTO
+select nm_func from tbfunc where id_depart = 01
+
+SELECT id_depart
+FROM tbdepart
+INNER JOIN tbdepart ON tbfunc.id_depart = tbdepart.id_depart;
+
+-- 4. RECUPERAR TODOS OS FUNCIONÁRIOS QUE POSSUEM UM SALÁRIO MAIOR QUE 3000.
+select salario < 3000 from tbfunc
+
+-- 5. Recuperar o nome do departamento e o nome do funcionário que trabalha naquele departamento
+select nm_depart as nomedepartamento, nm_func as nome_funcionario
+from tbdepart dp
+join nm_func n on dp.nm_depart = n.nm_depart;
