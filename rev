@@ -74,6 +74,15 @@ INNER JOIN tbdepart ON tbfunc.id_depart = tbdepart.id_depart;
 select salario < 3000 from tbfunc
 
 -- 5. Recuperar o nome do departamento e o nome do funcionário que trabalha naquele departamento
-select nm_depart as nomedepartamento, nm_func as nome_funcionario
-from tbdepart dp
-join nm_func n on dp.nm_depart = n.nm_depart;
+select d.nm_depart, f.nm_func
+from tbdepart d
+inner join tbfunc f on d.id_depart= f.id_depart
+
+-- 6. Recuperar o nome do departamento e a média salarial dos funcionários de cada
+-- departamento. A média salarial deve ser calculada para cada departamento
+-- individualmente.
+select d.nm_depart, AVG (f.salario) AS media 
+group by salario
+from tbdepart d
+inner join tbfunc f on d.id_depart= f.id_depart
+where 
